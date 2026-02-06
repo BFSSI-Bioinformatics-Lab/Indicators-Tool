@@ -1,0 +1,32 @@
+/*********************************************************************
+ *                                                                   *
+ * Purpose: Defines the styles for some commonly used html elements  *
+ *                                                                   *
+ * What it Contains:                                                 *
+ *      - positioning of the buttons and filter dropdowns for the    *
+ *          graphs                                                   *
+ *********************************************************************/
+
+/* For small phone screeens */
+@media screen and (max-width: 600px) {
+    body { 
+        font-size: calc(0.8em + 1vw) !important; 
+    }
+
+    main {
+        font-size: calc(0.8em + 1vw) !important;
+    }
+    
+    h1 {
+        font-size: calc(1.7em + 1vw) !important; 
+    }
+    
+    h3 {
+        font-size: calc(1em + 1vw) !important; 
+    }
+
+    .btn {
+        font-size: calc(0.6em + 1vw) !important;
+        margin: 3px 0;
+    }
+}
