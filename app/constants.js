@@ -1,3 +1,19 @@
+
+// Different Pages in the App
+export const Pages = {
+    Home: "Home",
+    Plots: "Plots",
+    Loading: "Loading"
+}
+
+// File locations for each page
+export const PageSrc = {
+    [Pages.Home]: "./templates/home_page.html",
+    [Pages.Loading]: "./templates/loading.html",
+    [Pages.Plots]: "./templates/plot_page.html"
+};
+
+
 // Translation: Helper class for doing translations
 export class Translation {
     static register(resources){
@@ -50,6 +66,11 @@ export class Translation {
 const LangEN = {
     translation: {
         Number: "{{num, number}}",
+        PageTitle: `Indicators Tool <small><strong>from Health Canada</strong></small>`,
+        PageSelectTitles: {
+            [Pages.Home]: "<b>Explore</b> the Indicators",
+            [Pages.Plots]: "<b>Explore</b> the Dashboard"
+        }
     }
 }
 
@@ -63,6 +84,11 @@ const REMPLACER_MOI_AVEC_ARGUMENTS = `${REMPLACER_MOI} - les arguments du texte:
 const LangFR = {
     translation: {
         Number: "{{num, number}}",
+        PageTitle: `${REMPLACER_MOI} <small><strong>de Santé Canada</strong></small>`,
+        PageSelectTitles: {
+            [Pages.Home]: `<b>Explorer</b> ${REMPLACER_MOI}`,
+            [Pages.Plots]: `<b>Explorer</b> ${REMPLACER_MOI}`
+        }
     }
 }
 
@@ -71,5 +97,5 @@ const LangFR = {
 // translations for certain text used in the project
 export const TranslationObj = {
     en: LangEN,
-    fr: LangFR
+    fr: LangFR,
 }

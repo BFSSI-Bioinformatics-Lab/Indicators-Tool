@@ -7,6 +7,52 @@
  *          graphs                                                   *
  *********************************************************************/
 
+
+:root {
+    /** colour theme **
+
+    Note: 
+      - The colours are based off Android's Material colour theme:
+         https://m2.material.io/develop/android/theming/color
+         https://m2.material.io/design/color/the-color-system.html
+
+    *******************/
+    --fontColour: #333333;
+    --background: #ffffff;
+    --surface: #ffffff;
+    --secondarySurface: #fbfcf8;
+    --error: #ff0000;
+    --onBackground: #000000;
+    --onSurface: #000000;
+    --onSecondarySurface: #000000;
+    --onError: #ffffff;
+    --primary: #26374a;
+    --primaryVariant: #3B4B5C;
+    --onPrimary: #ffffff;
+    --primaryBorderColour: #7D828B;
+    --primaryHover: #444444;
+    --onPrimaryHover: #ffffff;
+    --secondary: #335075;
+    --onSecondary: #ffffff;
+    --secondaryHover: #753350;
+    --onSecondaryHover: #f2f2f2;
+    --secondaryBorderColour: #bbbfc5;
+    --tertiary: #d7faff;
+    --tertiaryBorderColour: #269abc;
+    --onTertiary: #333333;
+    --link: #284162;
+    --headerTitleColor: #000000;
+
+    --smBorderRadius: 5px;
+    --borderRadius: 10px;
+
+    --fastTransition: all 0.25s ease-in-out;
+    --medTransition: all 0.5s ease-in-out;
+    --slowTransition: all 0.75s ease-in-out;
+    --defaultTransition: var(--medTransition);
+}
+
+
 /* For small phone screeens */
 @media screen and (max-width: 600px) {
     body { 
@@ -30,3 +76,52 @@
         margin: 3px 0;
     }
 }
+
+.pageSelectBtnContainer {
+    padding: 10px 15px;
+}
+
+.pageSelectBtn {
+    width: 100%;
+    min-height: 50px;
+}
+
+
+/* ################### Loading Screen ####################### */
+
+.loadingContainer {
+    min-height: 60vh;
+    width: 100%;
+}
+
+.loadingCircle {
+    width: 40px;
+    height: 40px;
+}
+
+.loadingCirclePrimary {
+    background-color: var(--primary);
+}
+
+.loadingCircleSecondary {
+    background-color: var(--secondary);
+}
+
+.loadCircleRight {
+    transform: translateX(100%);
+}
+
+.loadCircleLeft {
+    transform: translateX(-100%);
+}
+
+.loadCircleSlow {
+    --bs-spinner-animation-speed: 1s;
+}
+
+.loadCircleMed {
+    --bs-spinner-animation-speed: 0.75s;
+}
+
+
+/* ########################################################## */
