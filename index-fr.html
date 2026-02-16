@@ -31,6 +31,7 @@ What it contains:
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
               integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link rel="stylesheet" href="./static/GCWeb/css/theme.min.css">
+        <link rel="stylesheet" href="./static/css/global.css">
     
         <link rel="stylesheet" href="./styles/styles.css">
         
@@ -96,142 +97,157 @@ What it contains:
                 </section>
             </div>
         </div>
-        <nav class="gcweb-menu" typeof="SiteNavigationElement">
-            <div class="container">
-                <h2 class="wb-inv">Menu</h2>
-                <button type="button" aria-haspopup="true" aria-expanded="false"><span class="wb-inv"> principal </span>Menu <span
-                        class="expicon glyphicon glyphicon-chevron-down"></span></button>
-                <ul role="menu" aria-orientation="vertical"
-                    data-ajax-replace="./static/ajax/sitemenu-v5-fr.html">
+<!--        <nav class="gcweb-menu" typeof="SiteNavigationElement">-->
+<!--            <div class="container">-->
+<!--                <h2 class="wb-inv">Menu</h2>-->
+<!--                <button type="button" aria-haspopup="true" aria-expanded="false"><span class="wb-inv">principal </span>Menu <span-->
+<!--                        class="expicon glyphicon glyphicon-chevron-down"></span></button>-->
+<!--                <ul role="menu" aria-orientation="vertical"-->
+<!--                    data-ajax-replace="./static/ajax/sitemenu-v5-fr.html">-->
 
-                </ul>
-            </div>
-        </nav>
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </nav>-->
 
         <nav id="wb-bc" property="breadcrumb">
-            <h2>Vous êtes ici :</h2>
+            <h2>You are here:</h2>
             <div class="container">
                 <ol class="breadcrumb">
                         <li><a href="https://www.canada.ca/fr.html">Canada.ca</a></li>
                         <li><a href="https://canadiensensante.gc.ca/index-fra.php">Santé</a></li>
                         <li><a href="https://canadiensensante.gc.ca/science-research-sciences-recherches/index-fra.php">Science, recherche et données</a></li>
                         <li><a href="https://sante-infobase.canada.ca/">Infobase de la santé publique</a></li>
-                        <li>Outil de contribution des sources alimentaires (OCSA)</li>
+                        <li>Calculatrice des apports nutritionnels de référence</li>
                     </ol>
             </div>
         </nav>
     </header>
-    <main property="mainContentOfPage" class="container" typeof="WebPageElement" id="top">
-        <h1 property="name" id="pageTitle"></h1>
-
-        <div class="pageSelectContainer pt-4">
-            <div class="pageSelectBtnContainer col-md-6 col-sm-12">
-                <button class="pageSelectBtn btn btn-default col-md-4 col-sm-12" value="Home">
-                </button>
+    <main property="mainContentOfPage" typeof="WebPageElement" id="top">
+        <section class="blue-header well well-sm brdr-0 mrgn-bttm-0 mrgn-tp-0">
+            <div class="container mrgn-tp-sm">
+                <h1 class="mrgn-tp-md" property="name" id="wb-cont" dir="ltr"><span class="stacked"><span>Dietary Reference Intakes Calculator <small style="color:#fff;">from Health
+                    Canada</small></span>: <span></span></span></h1> <!-- <a class="app-name" href="https://health-infobase.canada.ca/">Health Infobase</a> -->
+                <p>An interactive tool to calculate daily nutrient intake recommendations</p>
+                <ul class="list-inline small mrgn-bttm-sm" style="line-height:1.65em" id="list-inline-desktop-only">
+                    <li class="mrgn-rght-lg"> Last updated: 2025-05-27</li>
+                    <!--<li> <a class="pdf" href="https://www.canada.ca/content/dam/hc-sc/documents/services/food-nutrition/healthy-eating/nutrient-value-some-common-foods-2015/nutrient-value-some-common-foods-2015-among-Canadian-adults.pdf"><i class="fas fa-download" aria-hidden="true"></i> <span class="wb-invisible">Download page in </span>PDF<span class="wb-invisible"> format</span></a></li>-->
+                    <!--<li> <a class="pdf" href="#"><i class="fas fa-download" aria-hidden="true"></i> <span class="wb-invisible">Download data in </span>CSV<span class="wb-invisible"> format</span></a></li>-->
+                </ul>
             </div>
-            <div class="pageSelectBtnContainer col-md-6 col-sm-12">
-                <button class="pageSelectBtn btn btn-default col-md-4 col-sm-12" value="Plots">
-                </button>
+        </section>
+
+        <div class="container pt-4">
+            <h1 property="name" id="pageTitle"></h1>
+
+            <div class="pageSelectContainer pt-4">
+                <div class="pageSelectBtnContainer col-md-6 col-sm-12">
+                    <button class="pageSelectBtn btn btn-default col-md-4 col-sm-12" value="Home">
+                    </button>
+                </div>
+                <div class="pageSelectBtnContainer col-md-6 col-sm-12">
+                    <button class="pageSelectBtn btn btn-default col-md-4 col-sm-12" value="Plots">
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div id="mainPage"></div>
+            <div id="mainPage"></div>
 
-        <div class="pagedetails col-xs-12">
-            <div class="row">
-                <div class="col-sm-6 col-md-5 col-lg-4">
-                    <details class="brdr-0">
-                        <summary class="btn btn-default text-center">Signaler un problème sur cette page</summary>
-                        <div class="well row">
-                            <div class="gc-rprt-prblm">
-                                <div class="gc-rprt-prblm-frm gc-rprt-prblm-tggl">
-                                    <form action="#">
-                                        <fieldset>
-                                            <legend><span class="field-name">Veuillez sélectionner toutes les cases qui s'appliquent : </span></legend>
-                                            <div class="checkbox">
-                                                <label for="problem1"><input type="checkbox" data-reveal="#broken"
-                                                                             name="problem" value="Something is broken"
-                                                                             id="problem1">Quelque chose ne fonctionne pas</label>
-                                            </div>
-                                            <div class="form-group hide" id="broken">
-                                                <label for="problem1-detail">Fournissez plus des détails (optionnel) :</label>
-                                                <input type="text" class="form-control full-width" id="problem1-detail">
-                                            </div>
-                                            <div class="checkbox">
-                                                <label for="problem2"><input type="checkbox" data-reveal="#spelling"
-                                                                             name="problem"
-                                                                             value="It has spelling or grammar mistakes"
-                                                                             id="problem2">Il y a des erreurs d’orthographe ou de grammaire</label>
-                                            </div>
-                                            <div class="form-group hide" id="spelling">
-                                                <label for="problem2-detail">Fournissez plus des détails (optionnel) :</label>
-                                                <input type="text" class="form-control full-width" id="problem2-detail">
-                                            </div>
-                                            <div class="checkbox">
-                                                <label for="problem3"><input type="checkbox" data-reveal="#wrong"
-                                                                             name="problem" value="The information is wrong"
-                                                                             id="problem3">L'information est erronée</label>
-                                            </div>
-                                            <div class="form-group hide" id="wrong">
-                                                <label for="problem3-detail">Fournissez plus des détails (optionnel) :</label>
-                                                <input type="text" class="form-control full-width" id="problem3-detail">
-                                            </div>
-                                            <div class="checkbox">
-                                                <label for="problem4"><input type="checkbox" data-reveal="#outdated"
-                                                                             name="problem"
-                                                                             value="The information is outdated"
-                                                                             id="problem4">L'information n'est plus à jour</label>
-                                            </div>
-                                            <div class="form-group hide" id="outdated">
-                                                <label for="problem4-detail">Fournissez plus des détails (optionnel) :</label>
-                                                <input type="text" class="form-control full-width" id="problem4-detail">
-                                            </div>
-                                            <div class="checkbox">
-                                                <label for="problem5"><input type="checkbox" data-reveal="#find"
-                                                                             name="problem"
-                                                                             value="I can’t find what I’m looking for"
-                                                                             id="problem5">Je n'arrive pas à trouver ce que je cherche</label>
-                                            </div>
-                                            <div class="form-group hide" id="find">
-                                                <label for="problem5-detail">Décrivez ce que vous cherchez (optionnel) :</label>
-                                                <input type="text" class="form-control full-width" id="problem5-detail">
-                                            </div>
-                                            <div class="checkbox">
-                                                <label for="problem6"><input type="checkbox" data-reveal="#confusing"
-                                                                             name="problem" value="It’s confusing"
-                                                                             id="problem6">Autre</label>
-                                            </div>
-                                            <div class="form-group hide" id="confusing">
-                                                <label for="problem6-detail">Fournissez plus des détails (optionnel) :</label>
-                                                <input type="text" class="form-control full-width" id="problem6-detail">
-                                            </div>
-                                        </fieldset>
-                                        <button type="submit" class="btn btn-primary wb-toggle"
-                                                data-toggle='{"stateOff": "hide", "stateOn": "show", "selector": ".gc-rprt-prblm-tggl"}'
-                                                aria-controls="wb-auto-3 wb-auto-4">
-                                            Soumettre
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="gc-rprt-prblm-thnk gc-rprt-prblm-tggl hide">
-                                    <h3>Merci de votre aide!</h3>
-                                    <p>Vous ne recevrez pas de réponse. Pour toute question, <a
-                                            href="https://www.canada.ca/fr/contact.html" target="_blank"
-                                    >contactez-nous</a>.</p>
+            <div class="pagedetails col-xs-12">
+                <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-4">
+                        <details class="brdr-0">
+                            <summary class="btn btn-default text-center">Signaler un problème sur cette page</summary>
+                            <div class="well row">
+                                <div class="gc-rprt-prblm">
+                                    <div class="gc-rprt-prblm-frm gc-rprt-prblm-tggl">
+                                        <form action="#">
+                                            <fieldset>
+                                                <legend><span class="field-name">Veuillez sélectionner toutes les cases qui s'appliquent : </span></legend>
+                                                <div class="checkbox">
+                                                    <label for="problem1"><input type="checkbox" data-reveal="#broken"
+                                                                                 name="problem" value="Something is broken"
+                                                                                 id="problem1">Quelque chose ne fonctionne pas</label>
+                                                </div>
+                                                <div class="form-group hide" id="broken">
+                                                    <label for="problem1-detail">Fournissez plus des détails (optionnel) :</label>
+                                                    <input type="text" class="form-control full-width" id="problem1-detail">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="problem2"><input type="checkbox" data-reveal="#spelling"
+                                                                                 name="problem"
+                                                                                 value="It has spelling or grammar mistakes"
+                                                                                 id="problem2">Il y a des erreurs d’orthographe ou de grammaire</label>
+                                                </div>
+                                                <div class="form-group hide" id="spelling">
+                                                    <label for="problem2-detail">Fournissez plus des détails (optionnel) :</label>
+                                                    <input type="text" class="form-control full-width" id="problem2-detail">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="problem3"><input type="checkbox" data-reveal="#wrong"
+                                                                                 name="problem" value="The information is wrong"
+                                                                                 id="problem3">L'information est erronée</label>
+                                                </div>
+                                                <div class="form-group hide" id="wrong">
+                                                    <label for="problem3-detail">Fournissez plus des détails (optionnel) :</label>
+                                                    <input type="text" class="form-control full-width" id="problem3-detail">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="problem4"><input type="checkbox" data-reveal="#outdated"
+                                                                                 name="problem"
+                                                                                 value="The information is outdated"
+                                                                                 id="problem4">L'information n'est plus à jour</label>
+                                                </div>
+                                                <div class="form-group hide" id="outdated">
+                                                    <label for="problem4-detail">Fournissez plus des détails (optionnel) :</label>
+                                                    <input type="text" class="form-control full-width" id="problem4-detail">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="problem5"><input type="checkbox" data-reveal="#find"
+                                                                                 name="problem"
+                                                                                 value="I can’t find what I’m looking for"
+                                                                                 id="problem5">Je n'arrive pas à trouver ce que je cherche</label>
+                                                </div>
+                                                <div class="form-group hide" id="find">
+                                                    <label for="problem5-detail">Décrivez ce que vous cherchez (optionnel) :</label>
+                                                    <input type="text" class="form-control full-width" id="problem5-detail">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="problem6"><input type="checkbox" data-reveal="#confusing"
+                                                                                 name="problem" value="It’s confusing"
+                                                                                 id="problem6">Autre</label>
+                                                </div>
+                                                <div class="form-group hide" id="confusing">
+                                                    <label for="problem6-detail">Fournissez plus des détails (optionnel) :</label>
+                                                    <input type="text" class="form-control full-width" id="problem6-detail">
+                                                </div>
+                                            </fieldset>
+                                            <button type="submit" class="btn btn-primary wb-toggle"
+                                                    data-toggle='{"stateOff": "hide", "stateOn": "show", "selector": ".gc-rprt-prblm-tggl"}'
+                                                    aria-controls="wb-auto-3 wb-auto-4">
+                                                Soumettre
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="gc-rprt-prblm-thnk gc-rprt-prblm-tggl hide">
+                                        <h3>Merci de votre aide!</h3>
+                                        <p>Vous ne recevrez pas de réponse. Pour toute question, <a
+                                                href="https://www.canada.ca/fr/contact.html" target="_blank"
+                                        >contactez-nous</a>.</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </details>
+                        </details>
+                    </div>
+                    <div class="wb-share col-sm-4 col-md-3 col-sm-offset-2 col-md-offset-4 col-lg-offset-5"
+                         data-wb-share='{"lnkClass": "btn btn-default btn-block"}'></div>
                 </div>
-                <div class="wb-share col-sm-4 col-md-3 col-sm-offset-2 col-md-offset-4 col-lg-offset-5"
-                     data-wb-share='{"lnkClass": "btn btn-default btn-block"}'></div>
+<!--                <dl id="wb-dtmd">-->
+<!--                    <dt>Date de modification :</dt>-->
+<!--                    <dd>-->
+<!--                        <time property="dateModified">2024-10-02</time>-->
+<!--                    </dd>-->
+<!--                </dl>-->
             </div>
-            <dl id="wb-dtmd">
-                <dt>Date de modification :</dt>
-                <dd>
-                    <time property="dateModified">2024-09-18</time>
-                </dd>
-            </dl>
         </div>
     </main>
     <footer id="wb-info">
@@ -278,7 +294,7 @@ What it contains:
                 </div>
             </div>
         </div>
-<!--        <svg><circle class="target" style="fill: #69b3a2" stroke="black" cx=50 cy=50 r=40></circle></svg>-->
+
     
     </footer>
     <!--[if gte IE 9 | !IE ]><!-->

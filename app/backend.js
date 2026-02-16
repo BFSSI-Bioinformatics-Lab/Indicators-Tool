@@ -8,6 +8,13 @@ export class Model {
 
     // TODO: How to load in the data
     async load() {
+        const data = await this.loadCSV(`data/Fruit and vegetable consumption frequency - CCHS-${i18next.language}.csv`);
+    }
 
+    // loadCSV(file): Loads the table and its columns from a CSV file
+    async loadCSV(file) {
+        const data = await d3.csv(file);
+        const columns = data.length > 0 ? Object.keys(data[0]) : [];
+        return {data, columns};
     }
 }

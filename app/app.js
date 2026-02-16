@@ -29,6 +29,7 @@ class App {
 
     // UpdateStaticText: Updates text for static elements when the page loads
     updateStaticText() {
+        d3.select(".blue-header #wb-cont").html(Translation.translate("PageHeaderTitle"));
         d3.select("#pageTitle").html(Translation.translate("PageTitle"));
 
         const pageSelectTranslations = Translation.translate("PageSelectTitles", {returnObjects: true});
@@ -135,9 +136,8 @@ window.addEventListener("load", () => {
     let model = new Model();
 
     let app = new App(model);
-    app.init(Pages.Loading);
 
-    Promise.all([model.load()]).then(() => {
+    Promise.all([model.load(), app.init(Pages.Loading)]).then(() => {
         app.loadMainPage();
     });
 });
