@@ -8,7 +8,7 @@ export class Model {
 
     // TODO: How to load in the data
     async load() {
-        const data = await this.loadCSV(`data/Fruit and vegetable consumption frequency - CCHS-${i18next.language}.csv`);
+        const data = await this.loadCSV(`data/${i18next.language}/Mock data for prototype.csv`);
     }
 
     // loadCSV(file): Loads the table and its columns from a CSV file
