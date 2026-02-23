@@ -13,53 +13,26 @@ export const PageSrc = {
     [Pages.Plots]: "./templates/plot_page.html"
 };
 
-
-// Translation: Helper class for doing translations
-export class Translation {
-    static register(resources){
-        i18next.use(i18nextBrowserLanguageDetector).init({
-            fallbackLng: "en",
-            detection: {
-                order: ['querystring', 'htmlTag', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'path', 'subdomain'],
-            },
-            resources: resources
-        })
-        i18next.changeLanguage();
-    }
-    
-    // Note:
-    // For some food groups with special characters like "Fruits & Vegetables", we want the title to be displayed as "Fruits & Vegetables" instead of "Fruits &amp; Vegatables"
-    //  After passing in the food group into the i18next library, the library encoded the food group to be "Fruits &amp; Vegatables"
-    // So all the special characters got encoded to their corresponding HTML Entities (eg. &lt; , &gt; , &quot;)
-    //
-    // So we need to decode back the encoded string with HTML entities to turn back "Fruits &amp; Vegetables" to "Fruits & Vegetables"
-    static translate(key, args){
-        const result = i18next.t(key, args);
-
-        if (typeof result !== 'string') return result;
-        return he.decode(result);
-    }
-
-    // translateNumStr(numStr, decimalPlaces): Translate a number to its correct
-    //  numeric represented string for different languages
-    // eg. '1.2' -> '1,2' in French
-    //
-    // Note:
-    //  See https://www.i18next.com/translation-function/formatting for more formatting
-    static translateNum(numStr, decimalPlaces = 1) {
-        let num = Number(numStr);
-        if (Number.isNaN(num)) return numStr;
-
-        let translateArgs = {num}
-        if (decimalPlaces) {
-            translateArgs["minimumFractionDigits"] = decimalPlaces;
-            translateArgs["maximumFractionDigits"] = decimalPlaces;
-        }
-
-        return this.translate("Number", translateArgs);
-    }
+// columns in the CSV files
+export const DataCols = {
+    Topic: "Topic ",
+    Indicator: "Indicator",
+    Population: "Population"
 }
 
+// PlotFilterOpts: Different filter options for the plots
+export const PlotFilterOpts = {
+    Topic: "Topic ",
+    Indicator: "Indicator",
+    Population: "Population"
+}
+
+// PlotFilterOrder: Order for the filter options in the plots
+export const PlotFilterOrder = [PlotFilterOpts.Topic, PlotFilterOpts.Indicator, PlotFilterOpts.Population];
+export const PlotFilterOrderInds = {};
+for (let i = 0; i < PlotFilterOrder.length; ++i) {
+    PlotFilterOrderInds[PlotFilterOrder[i]] = i;
+}
 
 // ================= ENGLISH TRANSLATIONS =======================
 
@@ -71,7 +44,15 @@ const LangEN = {
         PageSelectTitles: {
             [Pages.Home]: "<b>Explore</b> the Indicators",
             [Pages.Plots]: "<b>Explore</b> the Dashboard"
-        }
+        },
+        PlotFilterTitles: {
+            [PlotFilterOpts.Topic]: `Topic`,
+            [PlotFilterOpts.Indicator]: `Indicator`,
+            [PlotFilterOpts.Population]: `Population`
+        },
+        AboutPlot: `<b>About this dashboard</b>: Explore the health of people in Canada through the data
+        dashboard. Choose a topic from the drop down menu, then choose an indicator. Explore the data for each indicator by
+        clicking on the chart images on each indicator page. Some indicators may have additional data trends you can view`
     }
 }
 
@@ -90,7 +71,13 @@ const LangFR = {
         PageSelectTitles: {
             [Pages.Home]: `<b>Explorer</b> ${REMPLACER_MOI}`,
             [Pages.Plots]: `<b>Explorer</b> ${REMPLACER_MOI}`
-        }
+        },
+        PlotFilterTitles: {
+            [PlotFilterOpts.Topic]: `${REMPLACER_MOI}`,
+            [PlotFilterOpts.Indicator]: `${REMPLACER_MOI}`,
+            [PlotFilterOpts.Population]: `${REMPLACER_MOI}`
+        },
+        AboutPlot: `<b>${REMPLACER_MOI}</b>: ${REMPLACER_MOI}`
     }
 }
 

@@ -11,13 +11,18 @@
 ////////////////////////////////////////////////////////////////////      
 
 
-import { Translation, TranslationObj, PageSrc, Pages } from './constants.js';
+import { Translation } from './tools.js';
+import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFilterOrderInds } from './constants.js';
 import { Model } from './backend.js';
 
 
 class App {
     constructor(model) {
         this.model = model;
+        this.isSetup = {
+            [Pages.Home]: false,
+            [Pages.Plots]: false
+        };
     }
 
     // init(page): Initializes the entire app
@@ -114,12 +119,63 @@ class App {
 
     // TODO: How to handle the home page
     updateHomePage() {
-
+        this.isSetup[Pages.Home] = true;
     }
 
-    // TODO: How to handle the page for the plots
-    updatePlotPage() {
+    // updateDropdown(dropdownContainer, selections, input, title, onDropdownSelect): Updates a dropdown
+    updateDropdown(dropdownContainer, selections, input, title, onDropdownSelect) {
+        const dropdown = dropdownContainer.select("select");
+
+        dropdown.selectAll("option").remove();
+        dropdown
+            .on("change", onDropdownSelect)
+            .style("width", "100%")
+            .selectAll("option")
+            .data(selections)
+            .enter()
+            .append("option")
+            .property("value", d => d)
+            .text(d => d);
+        dropdown.property("value", input);
+
+        const dropdownLabel = dropdownContainer.select("label");
+        dropdownLabel.text(title);
+    }
+
+    updatePlotFilter(selector, filterOpt) {
+        const value = selector.property("value");
+        this.model.updatePlotFilterOpt(filterOpt, value);
         
+        const orderInd = PlotFilterOrderInds[filterOpt];
+        for (let i = orderInd + 1; i < PlotFilterOrder.length; ++i) {
+            const opt = PlotFilterOrder[i];
+            this.updateDropdownFuncs[opt]();
+        }
+    }
+
+    setupPlotPage() {
+        d3.select("#aboutPlotText").html(Translation.translate("AboutPlot"));
+
+        const plotFilterTitles = Translation.translate("PlotFilterTitles", {returnObjects: true});
+
+        this.updateDropdownFuncs = {
+            [PlotFilterOpts.Topic]: () => {this.updateDropdown(d3.select("#topicDropdown"), this.model.plotSelections[PlotFilterOpts.Topic], this.model.plotInputs[PlotFilterOpts.Topic], 
+                                                               plotFilterTitles[PlotFilterOpts.Topic], () => this.updatePlotFilter(d3.select("#topicSelector"), PlotFilterOpts.Topic))},
+            [PlotFilterOpts.Indicator]: () => {this.updateDropdown(d3.select("#indicatorDropdown"), this.model.plotSelections[PlotFilterOpts.Indicator], this.model.plotInputs[PlotFilterOpts.Indicator], 
+                                                                   plotFilterTitles[PlotFilterOpts.Indicator], () => this.updatePlotFilter(d3.select("#indicatorSelector"), PlotFilterOpts.Indicator))},
+            [PlotFilterOpts.Population]: () => {this.updateDropdown(d3.select("#populationDropdown"), this.model.plotSelections[PlotFilterOpts.Population], this.model.plotInputs[PlotFilterOpts.Population], 
+                                                                    plotFilterTitles[PlotFilterOpts.Population], () => this.updatePlotFilter(d3.select("#populationSelector"), PlotFilterOpts.Population))}
+        };
+
+
+        for (const opt in this.updateDropdownFuncs) {
+            this.updateDropdownFuncs[opt]();
+        }
+    }
+
+    updatePlotPage() {
+        this.setupPlotPage();
+        this.isSetup[Pages.Plots] = true;
     }
 }
 
@@ -137,7 +193,7 @@ window.addEventListener("load", () => {
 
     let app = new App(model);
 
-    Promise.all([model.load(), app.init(Pages.Loading)]).then(() => {
+    Promise.all([app.init(Pages.Loading), model.load()]).then(() => {
         app.loadMainPage();
     });
 });
