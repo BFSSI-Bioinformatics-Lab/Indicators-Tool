@@ -35,7 +35,6 @@ class App {
     // UpdateStaticText: Updates text for static elements when the page loads
     updateStaticText() {
         d3.select(".blue-header #wb-cont").html(Translation.translate("PageHeaderTitle"));
-        d3.select("#pageTitle").html(Translation.translate("PageTitle"));
 
         const pageSelectTranslations = Translation.translate("PageSelectTitles", {returnObjects: true});
         d3.selectAll(".pageSelectBtnContainer button").each((data, ind, nodes) => {
@@ -123,8 +122,9 @@ class App {
     }
 
     // updateDropdown(dropdownContainer, selections, input, title, onDropdownSelect): Updates a dropdown
-    updateDropdown(dropdownContainer, selections, input, title, onDropdownSelect) {
+    updateDropdown(dropdownContainer, selections, input, title, onDropdownSelect, enabled = true) {
         const dropdown = dropdownContainer.select("select");
+        dropdown.property("disabled", !enabled);
 
         dropdown.selectAll("option").remove();
         dropdown
@@ -142,7 +142,7 @@ class App {
         dropdownLabel.text(title);
     }
 
-    updatePlotFilter(selector, filterOpt) {
+    updatePlotFilterOpt(selector, filterOpt) {
         const value = selector.property("value");
         this.model.updatePlotFilterOpt(filterOpt, value);
         
@@ -153,18 +153,25 @@ class App {
         }
     }
 
+    // updatePlotDropdown(): Updates the dropdown for the plots
+    updatePlotDropdown(filterOpt, dropdownContainer) {
+        const dropdown = dropdownContainer.select("select");
+        const plotFilterTitles = Translation.translate("PlotFilterTitles", {returnObjects: true});
+        const selections = this.model.plotSelections[filterOpt];
+
+        const selectionIsEmpty = (selections.length < 0 || (selections.length == 1 && selections[0] == ""));
+
+        this.updateDropdown(dropdownContainer, this.model.plotSelections[filterOpt], this.model.plotInputs[filterOpt], 
+                            plotFilterTitles[filterOpt], () => this.updatePlotFilterOpt(dropdown, filterOpt), !selectionIsEmpty);
+    }
+
     setupPlotPage() {
         d3.select("#aboutPlotText").html(Translation.translate("AboutPlot"));
 
-        const plotFilterTitles = Translation.translate("PlotFilterTitles", {returnObjects: true});
-
         this.updateDropdownFuncs = {
-            [PlotFilterOpts.Topic]: () => {this.updateDropdown(d3.select("#topicDropdown"), this.model.plotSelections[PlotFilterOpts.Topic], this.model.plotInputs[PlotFilterOpts.Topic], 
-                                                               plotFilterTitles[PlotFilterOpts.Topic], () => this.updatePlotFilter(d3.select("#topicSelector"), PlotFilterOpts.Topic))},
-            [PlotFilterOpts.Indicator]: () => {this.updateDropdown(d3.select("#indicatorDropdown"), this.model.plotSelections[PlotFilterOpts.Indicator], this.model.plotInputs[PlotFilterOpts.Indicator], 
-                                                                   plotFilterTitles[PlotFilterOpts.Indicator], () => this.updatePlotFilter(d3.select("#indicatorSelector"), PlotFilterOpts.Indicator))},
-            [PlotFilterOpts.Population]: () => {this.updateDropdown(d3.select("#populationDropdown"), this.model.plotSelections[PlotFilterOpts.Population], this.model.plotInputs[PlotFilterOpts.Population], 
-                                                                    plotFilterTitles[PlotFilterOpts.Population], () => this.updatePlotFilter(d3.select("#populationSelector"), PlotFilterOpts.Population))}
+            [PlotFilterOpts.Topic]: () => {this.updatePlotDropdown(PlotFilterOpts.Topic, d3.select("#topicDropdown"))},
+            [PlotFilterOpts.Indicator]: () => {this.updatePlotDropdown(PlotFilterOpts.Indicator, d3.select("#indicatorDropdown"))},
+            [PlotFilterOpts.Population]: () => {this.updatePlotDropdown(PlotFilterOpts.Population, d3.select("#populationDropdown"))}
         };
 
 
@@ -193,7 +200,7 @@ window.addEventListener("load", () => {
 
     let app = new App(model);
 
-    Promise.all([app.init(Pages.Loading), model.load()]).then(() => {
-        app.loadMainPage();
+    Promise.all([model.load()]).then(() => {
+        app.init(Pages.Home);
     });
 });

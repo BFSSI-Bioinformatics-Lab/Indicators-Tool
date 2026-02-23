@@ -40,7 +40,6 @@ const LangEN = {
     translation: {
         Number: "{{num, number}}",
         PageHeaderTitle: `Indicators Tool <small style="color:#fff;">from Health Canada</small>`,
-        PageTitle: `Indicators Tool <small><strong>from Health Canada</strong></small>`,
         PageSelectTitles: {
             [Pages.Home]: "<b>Explore</b> the Indicators",
             [Pages.Plots]: "<b>Explore</b> the Dashboard"
@@ -66,8 +65,7 @@ const REMPLACER_MOI_AVEC_ARGUMENTS = `${REMPLACER_MOI} - les arguments du texte:
 const LangFR = {
     translation: {
         Number: "{{num, number}}",
-        PageHeaderTitle: `${REMPLACER_MOI} <small style="color:#fff;">from Health Canada</small>`,
-        PageTitle: `${REMPLACER_MOI} <small><strong>de Santé Canada</strong></small>`,
+        PageHeaderTitle: `${REMPLACER_MOI} <small style="color:#fff;">de Santé Canada</small>`,
         PageSelectTitles: {
             [Pages.Home]: `<b>Explorer</b> ${REMPLACER_MOI}`,
             [Pages.Plots]: `<b>Explorer</b> ${REMPLACER_MOI}`
