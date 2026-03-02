@@ -55,6 +55,16 @@ export class Translation {
 
 // DictTool: Tools for handling dictionaries
 export class DictTools {
+    // getKeyAtInd(dct, ind): Retrieve the key at a certain index
+    static getKeyAtInd(dct, ind) {
+        let currentInd = 0;
+        for (const key in dct) {
+            if (ind == currentInd) return key;
+            currentInd++;
+        }
+
+        return undefined;
+    }
 
     // getFirstKey(dct): Retrieves the first key in the dictionary
     static getFirstKey(dct) {

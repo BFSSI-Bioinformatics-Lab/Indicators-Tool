@@ -12,7 +12,7 @@
 
 
 import { Translation } from './tools.js';
-import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFilterOrderInds } from './constants.js';
+import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFilterOrderInds, GraphSelectImages } from './constants.js';
 import { Model } from './backend.js';
 
 
@@ -142,6 +142,50 @@ class App {
         dropdownLabel.text(title);
     }
 
+    updateGraphSelect(graphSelectContainer, selections, input, title) {
+        const graphSelector = graphSelectContainer.select(".graph-selects-container");
+        const self = this;
+
+        graphSelector.selectAll(".graph-select").remove();
+        const activeGraphSelectClsName = "active-graph-select";
+        const graphTypes = Translation.translate("GraphTypes", {returnObjects: true});
+
+        for (const selection of selections) {
+            if (selection == "") continue;
+
+            const graphType = graphTypes[selection];
+            if (graphType == undefined) continue;
+
+            const image = GraphSelectImages[graphType];
+
+            const currentGraphSelect = graphSelector.append("div")
+                .datum(selection)
+                .classed("graph-select", true)
+                .classed("col-md-3", true)
+                .classed("col-xs-6", true)
+                .classed(activeGraphSelectClsName, selection == input)
+                .on("click", function(data) {
+                    d3.selectAll(`.${activeGraphSelectClsName}`).classed(activeGraphSelectClsName, false);
+
+                    const chosenGraphSelect = d3.select(this);
+                    chosenGraphSelect.classed(activeGraphSelectClsName, true);
+
+                    self.model.updatePlotFilterOpt(PlotFilterOpts.GraphType, data);
+                });
+
+            currentGraphSelect.append("span")
+                .classed("graph-select-subtitle", true)
+                .text(selection);
+
+            currentGraphSelect.append("img")
+                .attr("src", image)
+                .attr("alt", selection);
+        }
+
+        const graphSelectLabel = graphSelectContainer.select("label");
+        graphSelectLabel.text(title);
+    }
+
     updatePlotFilterOpt(selector, filterOpt) {
         const value = selector.property("value");
         this.model.updatePlotFilterOpt(filterOpt, value);
@@ -149,34 +193,45 @@ class App {
         const orderInd = PlotFilterOrderInds[filterOpt];
         for (let i = orderInd + 1; i < PlotFilterOrder.length; ++i) {
             const opt = PlotFilterOrder[i];
-            this.updateDropdownFuncs[opt]();
+            const filterFunc = this.updateFilterFuncs[opt];
+            
+            if (filterFunc !== undefined) {
+               filterFunc();
+            }
         }
     }
 
     // updatePlotDropdown(): Updates the dropdown for the plots
-    updatePlotDropdown(filterOpt, dropdownContainer) {
+    updatePlotDropdown(filterOpt, dropdownContainer, plotFilterTitles) {
         const dropdown = dropdownContainer.select("select");
-        const plotFilterTitles = Translation.translate("PlotFilterTitles", {returnObjects: true});
         const selections = this.model.plotSelections[filterOpt];
-
         const selectionIsEmpty = (selections.length < 0 || (selections.length == 1 && selections[0] == ""));
 
         this.updateDropdown(dropdownContainer, this.model.plotSelections[filterOpt], this.model.plotInputs[filterOpt], 
                             plotFilterTitles[filterOpt], () => this.updatePlotFilterOpt(dropdown, filterOpt), !selectionIsEmpty);
     }
 
+    updatePlotGraphSelect(filterOpt, graphSelectContainer, plotFilterTitles) {
+        const selections = this.model.plotSelections[filterOpt];
+        const input = this.model.plotInputs[filterOpt];
+
+        this.updateGraphSelect(graphSelectContainer, selections, input, plotFilterTitles[filterOpt]);
+    }
+
     setupPlotPage() {
         d3.select("#aboutPlotText").html(Translation.translate("AboutPlot"));
+        const plotFilterTitles = Translation.translate("PlotFilterTitles", {returnObjects: true});
 
-        this.updateDropdownFuncs = {
-            [PlotFilterOpts.Topic]: () => {this.updatePlotDropdown(PlotFilterOpts.Topic, d3.select("#topicDropdown"))},
-            [PlotFilterOpts.Indicator]: () => {this.updatePlotDropdown(PlotFilterOpts.Indicator, d3.select("#indicatorDropdown"))},
-            [PlotFilterOpts.Population]: () => {this.updatePlotDropdown(PlotFilterOpts.Population, d3.select("#populationDropdown"))}
+        this.updateFilterFuncs = {
+            [PlotFilterOpts.Topic]: () => {this.updatePlotDropdown(PlotFilterOpts.Topic, d3.select("#topicDropdown"), plotFilterTitles)},
+            [PlotFilterOpts.Indicator]: () => {this.updatePlotDropdown(PlotFilterOpts.Indicator, d3.select("#indicatorDropdown"), plotFilterTitles)},
+            [PlotFilterOpts.Population]: () => {this.updatePlotDropdown(PlotFilterOpts.Population, d3.select("#populationDropdown"), plotFilterTitles)},
+            [PlotFilterOpts.GraphType]: () => {this.updatePlotGraphSelect(PlotFilterOpts.GraphType, d3.select("#graphSelector"), plotFilterTitles)}
         };
 
 
-        for (const opt in this.updateDropdownFuncs) {
-            this.updateDropdownFuncs[opt]();
+        for (const opt in this.updateFilterFuncs) {
+            this.updateFilterFuncs[opt]();
         }
     }
 

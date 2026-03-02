@@ -2,14 +2,12 @@
 // Different Pages in the App
 export const Pages = {
     Home: "Home",
-    Plots: "Plots",
-    Loading: "Loading"
+    Plots: "Plots"
 }
 
 // File locations for each page
 export const PageSrc = {
     [Pages.Home]: "./templates/home_page.html",
-    [Pages.Loading]: "./templates/loading.html",
     [Pages.Plots]: "./templates/plot_page.html"
 };
 
@@ -17,18 +15,49 @@ export const PageSrc = {
 export const DataCols = {
     Topic: "Topic ",
     Indicator: "Indicator",
-    Population: "Population"
+    Population: "Population",
+    GraphType: "Graph type"
 }
 
-// PlotFilterOpts: Different filter options for the plots
+// Different filter options for the plots
 export const PlotFilterOpts = {
     Topic: "Topic ",
     Indicator: "Indicator",
-    Population: "Population"
+    Population: "Population",
+    GraphType: "GraphType"
+}
+
+// Different types of graphs
+export const GraphTypes = {
+    Sex: "sex",
+    Age: "age",
+    Map: "map",
+    Population: "population",
+    Income: "income",
+    Education: "education",
+    BackgroundAndIdentity: "background and identity",
+    ImmigrantStatus: "immigrant status",
+    NotApplicable: "not applicable",
+    AgeSex: "age sex"
+}
+
+// Paths to the images for the graph
+export const GraphSelectImages = {
+    [GraphTypes.Sex]:  "./images/rbasg.png",
+    [GraphTypes.Age]: "./images/rbf.png",
+    [GraphTypes.Map]: "./images/rbfg.png",
+    [GraphTypes.Population]: "./images/rbasg.png",
+    [GraphTypes.Income]: "./images/rbf.png",
+    [GraphTypes.Education]: "./images/rbfg.png",
+    [GraphTypes.BackgroundAndIdentity]: "./images/rbasg.png",
+    [GraphTypes.ImmigrantStatus]: "./images/rbf.png",
+    [GraphTypes.ImmigrantStatus]: "./images/rbfg.png",
+    [GraphTypes.NotApplicable]: "./images/rbasg.png",
+    [GraphTypes.AgeSex]: "./images/rbf.png"
 }
 
 // PlotFilterOrder: Order for the filter options in the plots
-export const PlotFilterOrder = [PlotFilterOpts.Topic, PlotFilterOpts.Indicator, PlotFilterOpts.Population];
+export const PlotFilterOrder = [PlotFilterOpts.Topic, PlotFilterOpts.Indicator, PlotFilterOpts.Population, PlotFilterOpts.GraphType];
 export const PlotFilterOrderInds = {};
 for (let i = 0; i < PlotFilterOrder.length; ++i) {
     PlotFilterOrderInds[PlotFilterOrder[i]] = i;
@@ -44,14 +73,30 @@ const LangEN = {
             [Pages.Home]: "<b>Explore</b> the Indicators",
             [Pages.Plots]: "<b>Explore</b> the Dashboard"
         },
+
         PlotFilterTitles: {
             [PlotFilterOpts.Topic]: `Topic`,
             [PlotFilterOpts.Indicator]: `Indicator`,
-            [PlotFilterOpts.Population]: `Population`
+            [PlotFilterOpts.Population]: `Population`,
+            [PlotFilterOpts.GraphType]: `Graph Type`
         },
+
         AboutPlot: `<b>About this dashboard</b>: Explore the health of people in Canada through the data
         dashboard. Choose a topic from the drop down menu, then choose an indicator. Explore the data for each indicator by
-        clicking on the chart images on each indicator page. Some indicators may have additional data trends you can view`
+        clicking on the chart images on each indicator page. Some indicators may have additional data trends you can view`,
+        
+        GraphTypes: {
+            "Sex": GraphTypes.Sex,
+            "Age": GraphTypes.Age,
+            "Map": GraphTypes.Map,
+            "Population": GraphTypes.Population,
+            "Income": GraphTypes.Income,
+            "Education": GraphTypes.Education,
+            "Cultural/racial background & Indigenous identity": GraphTypes.BackgroundAndIdentity,
+            "Immigrant status": GraphTypes.ImmigrantStatus,
+            "N/A": GraphTypes.NotApplicable,
+            "Age-sex": GraphTypes.AgeSex
+        }
     }
 }
 
@@ -73,9 +118,23 @@ const LangFR = {
         PlotFilterTitles: {
             [PlotFilterOpts.Topic]: `${REMPLACER_MOI}`,
             [PlotFilterOpts.Indicator]: `${REMPLACER_MOI}`,
-            [PlotFilterOpts.Population]: `${REMPLACER_MOI}`
+            [PlotFilterOpts.Population]: `${REMPLACER_MOI}`,
+            [PlotFilterOpts.GraphType]: `${REMPLACER_MOI}`
         },
-        AboutPlot: `<b>${REMPLACER_MOI}</b>: ${REMPLACER_MOI}`
+        AboutPlot: `<b>${REMPLACER_MOI}</b>: ${REMPLACER_MOI}`,
+
+        GraphTypes: {
+            "Sex": GraphTypes.Sex,
+            "Age": GraphTypes.Age,
+            "Map": GraphTypes.Map,
+            "Population": GraphTypes.Population,
+            "Income": GraphTypes.Income,
+            "Education": GraphTypes.Education,
+            "Cultural/racial background & Indigenous identity": GraphTypes.BackgroundAndIdentity,
+            "Immigrant status": GraphTypes.ImmigrantStatus,
+            "N/A": GraphTypes.NotApplicable,
+            "Age-sex": GraphTypes.AgeSex
+        }
     }
 }
 
