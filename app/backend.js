@@ -78,6 +78,11 @@ export class Model {
         }
     }
 
+    // TODO: How to handle updating the data for the plots
+    updatePlotData() {
+        
+    }
+
     async load() {
         await this.loadData();
         this.initPlotInputs();

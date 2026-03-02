@@ -12,8 +12,10 @@
 
 
 import { Translation } from './tools.js';
-import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFilterOrderInds, GraphSelectImages } from './constants.js';
+import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFilterOrderInds, GraphSelectImages, GraphTypes } from './constants.js';
 import { Model } from './backend.js';
+import { MapGraph } from './graphs/mapGraph.js';
+import { EmptyGraph } from './graphs/emptyGraph.js';
 
 
 class App {
@@ -23,6 +25,8 @@ class App {
             [Pages.Home]: false,
             [Pages.Plots]: false
         };
+
+        this.graphs = {};
     }
 
     // init(page): Initializes the entire app
@@ -142,6 +146,30 @@ class App {
         dropdownLabel.text(title);
     }
 
+    // setupGraph(graphs, selectedGraphType, model): Setup the graph needed
+    setupGraph(selectedGraphType) {
+        let result;
+        if (selectedGraphType == GraphTypes.Map) {
+            result = new MapGraph(this.model);
+        } else {
+            result = new EmptyGraph(this.model);
+        }
+
+        this.graphs[selectedGraphType] = result;
+        return result
+    }
+
+    // updateGraph(selectedGraphType): Update the graph
+    updateGraph(selectedGraphType) {
+        let graph = this.graphs[selectedGraphType];
+        if (graph == undefined) {
+            graph = this.setupGraph(selectedGraphType);
+        }
+
+        this.model.updatePlotData();
+        graph.update();
+    }
+
     updateGraphSelect(graphSelectContainer, selections, input, title) {
         const graphSelector = graphSelectContainer.select(".graph-selects-container");
         const self = this;
@@ -159,18 +187,19 @@ class App {
             const image = GraphSelectImages[graphType];
 
             const currentGraphSelect = graphSelector.append("div")
-                .datum(selection)
+                .datum({text: selection, type: graphType})
                 .classed("graph-select", true)
                 .classed("col-md-3", true)
                 .classed("col-xs-6", true)
                 .classed(activeGraphSelectClsName, selection == input)
-                .on("click", function(data) {
+                .on("click", function(selectedGraphData) {
                     d3.selectAll(`.${activeGraphSelectClsName}`).classed(activeGraphSelectClsName, false);
 
                     const chosenGraphSelect = d3.select(this);
                     chosenGraphSelect.classed(activeGraphSelectClsName, true);
 
-                    self.model.updatePlotFilterOpt(PlotFilterOpts.GraphType, data);
+                    self.model.updatePlotFilterOpt(PlotFilterOpts.GraphType, selectedGraphData.type);
+                    self.updateGraph(selectedGraphData.type);
                 });
 
             currentGraphSelect.append("span")
@@ -184,6 +213,7 @@ class App {
 
         const graphSelectLabel = graphSelectContainer.select("label");
         graphSelectLabel.text(title);
+        this.updateGraph(input);
     }
 
     updatePlotFilterOpt(selector, filterOpt) {
