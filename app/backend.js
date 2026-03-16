@@ -1,5 +1,5 @@
-import { Pages, DataCols, PlotFilterOpts, PlotFilterOrderInds, PlotFilterOrder } from "./constants.js"
-import { DictTools } from "./tools.js";
+import { Pages, DataCols, PlotFilterOpts, PlotFilterOrderInds, PlotFilterOrder, GraphTypes } from "./constants.js"
+import { DictTools, Translation } from "./tools.js";
 
 
 export class Model {
@@ -8,6 +8,7 @@ export class Model {
         this.groupedData;
         this.plotSelections = {};
         this.plotInputs = {};
+        this.plotData;
     }
 
     async loadData() {
@@ -72,21 +73,48 @@ export class Model {
             
             if (i > orderInd) {
                 const currentOpt = PlotFilterOrder[i];
-                this.plotInputs[currentOpt] = DictTools.getFirstKey(selections);
+                this.plotInputs[currentOpt] = (currentOpt != PlotFilterOpts.GraphType) ? DictTools.getFirstKey(selections) : DictTools.getKeyAtInd(selections, 1);
                 this.plotSelections[currentOpt] = Object.keys(selections);
             }
         }
     }
 
-    // TODO: How to handle updating the data for the plots
+    // updatePlotData(): Updates the internal data for the plots
     updatePlotData() {
+        this.plotData = this.groupedData;
         
+        for (let i = 0; i < PlotFilterOrder.length; ++i) {
+            const currentOpt = PlotFilterOrder[i];
+            const currentInput = this.plotInputs[currentOpt];
+            this.plotData = this.plotData[currentInput];
+        }
+
+        const graphTypes = Translation.translate("GraphTypes", {returnObjects: true});
+
+        if (graphTypes[this.plotInputs[PlotFilterOpts.GraphType]] == GraphTypes.Map) {
+            const data = d3.nest()
+                            .key(d => d[DataCols.SubGroup])
+                            .object(this.plotData);
+
+            this.plotData = {};
+            const provinceKeys = Translation.translate("ProvinceKeys", {returnObjects: true});
+
+            for (const province in data) {
+                let provinceKey = provinceKeys[province];
+                if (provinceKey == undefined) {
+                    provinceKey = province;
+                }
+
+                this.plotData[provinceKey] = data[province][0];
+            }
+        }
     }
 
     async load() {
         await this.loadData();
         this.initPlotInputs();
         this.initPlotSelections();
+        this.updatePlotData();
     }
 
     // loadCSV(file): Loads the table and its columns from a CSV file

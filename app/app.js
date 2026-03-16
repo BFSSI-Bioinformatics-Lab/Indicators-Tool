@@ -198,7 +198,7 @@ class App {
                     const chosenGraphSelect = d3.select(this);
                     chosenGraphSelect.classed(activeGraphSelectClsName, true);
 
-                    self.model.updatePlotFilterOpt(PlotFilterOpts.GraphType, selectedGraphData.type);
+                    self.model.updatePlotFilterOpt(PlotFilterOpts.GraphType, selectedGraphData.text);
                     self.updateGraph(selectedGraphData.type);
                 });
 

@@ -1,5 +1,5 @@
 import { BaseGraph } from "./baseGraph.js";
-import { SVGIcons } from "../constants.js";
+import { SVGS } from "../assets.js";
 import { Translation } from "../tools.js";
 
 
@@ -23,7 +23,7 @@ export class EmptyGraph extends BaseGraph {
         .attr("viewBox", "0 0 512 512")
         .attr("width", "512")
         .attr("height", "512")
-        .html(SVGIcons["MagnifyingGlass"]);
+        .html(SVGS["MagnifyingGlass"]);
     }
 
     update() {
