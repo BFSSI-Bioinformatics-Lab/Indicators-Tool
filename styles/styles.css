@@ -50,6 +50,22 @@
     --medTransition: all 0.5s ease-in-out;
     --slowTransition: all 0.75s ease-in-out;
     --defaultTransition: var(--medTransition);
+
+    --defaultProvinceColour: #ffffff;
+    --provinceOutline: #000000;
+    --ontarioColour: #F8C400;
+    --manitobaColour: #B9DB6B;
+    --saskatchewanColour: #9DCF58;
+    --albertaColour: #99B086;
+    --britishColumbiaColour: #429385;
+    --yukonColour: #7A8A93;
+    --northWestTerritoriesColour: #97AFBF;
+    --nunavutColour: #76C6F0;
+    --quebecColour: #faa32a;
+    --newfoundlandAndLabradorColour: #F7C685;
+    --newBrunswickColour: #EC8A91;
+    --novaScotiaColour: #DC1B4B;
+    --princeEdwardIslandColour: #da90fc;
 }
 
 
@@ -195,6 +211,83 @@ Graph Selects
 
 .svgPrimaryIconPath {
     fill: var(--primary);
+}
+
+.svgProvinceOutline {
+    fill: var(--provinceOutline);
+    transition: var(--medTransition);
+}
+
+.svgProvinceArea {
+    fill: var(--defaultProvinceColour);
+    transition: var(--medTransition);
+}
+
+#ontario .svgProvinceArea {
+    fill: var(--ontarioColour);
+}
+
+#manitoba .svgProvinceArea {
+    fill: var(--manitobaColour);
+}
+
+#saskatchewan .svgProvinceArea {
+    fill: var(--saskatchewanColour);
+}
+
+#alberta .svgProvinceArea {
+    fill: var(--albertaColour);
+}
+
+#britishColumbia .svgProvinceArea {
+    fill: var(--britishColumbiaColour);
+}
+
+#nunavut .svgProvinceArea {
+    fill: var(--nunavutColour);
+}
+
+#northWestTerritories .svgProvinceArea {
+    fill: var(--northWestTerritoriesColour);
+}
+
+#yukon .svgProvinceArea {
+    fill: var(--yukonColour);
+}
+
+#quebec .svgProvinceArea {
+    fill: var(--quebecColour);
+}
+
+#newfoundlandAndLabrador .svgProvinceArea {
+    fill: var(--newfoundlandAndLabradorColour);
+}
+
+#newBrunswick .svgProvinceArea {
+    fill: var(--newBrunswickColour);
+}
+
+#novaScotia .svgProvinceArea {
+    fill: var(--novaScotiaColour);
+}
+
+#princeEdwardIsland .svgProvinceArea {
+    fill: var(--princeEdwardIslandColour);
+}
+
+.unavailableProvince .svgProvinceArea {
+    fill: var(--defaultProvinceColour) !important;
+}
+
+.selectedProvince .svgProvinceOutline {
+    stroke-width: 8;
+    stroke: var(--primary);
+    transition: var(--medTransition);
+}
+
+.selectedProvince .svgProvinceArea {
+    filter: contrast(130%);
+    transition: var(--medTransition);
 }
 
 /* ==================================================== */
