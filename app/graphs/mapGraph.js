@@ -58,17 +58,17 @@ export class MapGraph extends BaseGraph {
 
         this.provinces[ProvinceKeys.Saskatchewan] = this.mapContainer.append("g")
             .attr("id", ProvinceKeys.Saskatchewan)
-            .attr("transform", "translate(431,907)")
+            .attr("transform", "translate(431,909)")
             .html(SVGS.Saskatchewan)
 
         this.provinces[ProvinceKeys.Alberta] = this.mapContainer.append("g")
             .attr("id", ProvinceKeys.Alberta)
-            .attr("transform", "translate(263,816)")
+            .attr("transform", "translate(263,818)")
             .html(SVGS.Alberta)
 
         this.provinces[ProvinceKeys.BritishColumnbia] = this.mapContainer.append("g")
             .attr("id", ProvinceKeys.BritishColumnbia)
-            .attr("transform", "translate(0,600)")
+            .attr("transform", "translate(-8,600)")
             .html(SVGS.BritishColumbia)
 
         this.provinces[ProvinceKeys.Nunavut] = this.mapContainer.append("g")
