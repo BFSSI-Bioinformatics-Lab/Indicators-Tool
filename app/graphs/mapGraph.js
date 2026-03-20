@@ -22,7 +22,7 @@ export class MapGraph extends BaseGraph {
     setup() {
         super.setup();
         this.mapContainer = this.svg.append("g")
-            .attr("transform", `translate(${Dims.MapGraph.GraphLeft}, ${Dims.MapGraph.GraphTop})`);
+            .attr("transform", `translate(${Dims.MapGraph.GraphLeft}, ${Dims.MapGraph.GraphTop}) scale(${Dims.MapGraph.MapScale})`);
         this.tooltipGroup = this.svg.append("g");
 
         // add the heading
@@ -161,16 +161,30 @@ export class MapGraph extends BaseGraph {
         elementTransform = elementTransform[0].split(",");
 
         let mousePos = undefined;
-        let mouseX = parseFloat(elementTransform[0]) + Dims.MapGraph.GraphLeft + Dims.MapGraph.TooltipMouseXOffset;
-        let mouseY = parseFloat(elementTransform[1]) + Dims.MapGraph.GraphTop + Dims.MapGraph.TooltipMouseYOffset;
+        let mouseX = parseFloat(elementTransform[0]) * Dims.MapGraph.MapScale + Dims.MapGraph.GraphLeft;
+        let mouseY = parseFloat(elementTransform[1]) * Dims.MapGraph.MapScale + Dims.MapGraph.GraphTop;
 
         try {
             mousePos = d3.mouse(element.node());
         } catch (error) {}
 
         if (mousePos !== undefined) {
-            mouseX += mousePos[0];
-            mouseY += mousePos[1];
+            mouseX += mousePos[0] * Dims.MapGraph.MapScale;
+            mouseY += mousePos[1] * Dims.MapGraph.MapScale;
+        }
+
+        if (mouseX <= Dims.MapGraph.GraphWidth / 2) {
+            mouseX += Dims.MapGraph.TooltipMouseXOffset;
+        } else {
+            const toolTipWidth = tooltip.background.attr("width");
+            mouseX -= toolTipWidth * Dims.MapGraph.MapScale - Dims.MapGraph.TooltipMouseXOffset;
+        }
+
+        if (mouseY <= Dims.MapGraph.GraphHeight / 2) {
+            mouseY += Dims.MapGraph.TooltipMouseYOffset;
+        } else {
+            const toolTipHeight = tooltip.background.attr("height");
+            mouseY -= toolTipHeight * Dims.MapGraph.MapScale - Dims.MapGraph.TooltipMouseYOffset;
         }
 
         tooltip.group

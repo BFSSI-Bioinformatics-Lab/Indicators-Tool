@@ -101,25 +101,26 @@ export const TextWrap  = {
 // Dims: Dimensions used in the visuals
 export const Dims = {
     MapGraph: {
-        HeadingFontSize: 70,
-        GraphWidth: 2600,
-        GraphHeight: 2000,
+        HeadingFontSize: 110,
+        MapScale: 1.32,
+        GraphWidth: 2900,
+        GraphHeight: 2600,
         GraphTop: 250,
         GraphBottom: 80,
         GraphLeft: 220,
         GraphRight: 200,
         TooltipMinWidth: 400,
-        TooltipHeight: 170,
-        TooltipPaddingVert: 15,
+        TooltipHeight: 240,
+        TooltipPaddingVert: 24,
         TooltipPaddingHor: 18,
         TooltipTextPaddingVert: 8,
-        TooltipTextPaddingHor: 12,
-        TooltipHighlightWidth: 5,
-        TooltipBorderWidth: 5,
-        TooltipFontSize: 40,
+        TooltipTextPaddingHor: 24,
+        TooltipHighlightWidth: 10,
+        TooltipBorderWidth: 10,
+        TooltipFontSize: 65,
         TooltipTitleMarginBtm: 12,
-        TooltipMouseXOffset: 10,
-        TooltipMouseYOffset: 10
+        TooltipMouseXOffset: 100,
+        TooltipMouseYOffset: 100
     }
 }
 
