@@ -52,20 +52,21 @@
     --defaultTransition: var(--medTransition);
 
     --defaultProvinceColour: #ffffff;
-    --provinceOutline: #000000;
-    --ontarioColour: #F8C400;
-    --manitobaColour: #B9DB6B;
-    --saskatchewanColour: #9DCF58;
-    --albertaColour: #99B086;
-    --britishColumbiaColour: #429385;
-    --yukonColour: #7A8A93;
-    --northWestTerritoriesColour: #97AFBF;
-    --nunavutColour: #76C6F0;
-    --quebecColour: #faa32a;
-    --newfoundlandAndLabradorColour: #F7C685;
-    --newBrunswickColour: #EC8A91;
-    --novaScotiaColour: #DC1B4B;
-    --princeEdwardIslandColour: #da90fc;
+    --provinceOutline: #495057;
+    --provinceHighlight: #ef9f90;
+    --ontarioColour: #00B4D8;
+    --manitobaColour: #0096C7;
+    --saskatchewanColour: #0077B6;
+    --albertaColour: #023E8A;
+    --britishColumbiaColour: #03045E;
+    --yukonColour: #90E0EF;
+    --northWestTerritoriesColour: #ADE8F4;
+    --nunavutColour: #CAF0F8;
+    --quebecColour: #48CAE4;
+    --newfoundlandAndLabradorColour: #90E0EF;
+    --newBrunswickColour: #ADE8F4;
+    --novaScotiaColour: #CAF0F8;
+    --princeEdwardIslandColour: #03045E;
 }
 
 
@@ -215,12 +216,12 @@ Graph Selects
 
 .svgProvinceOutline {
     fill: var(--provinceOutline);
-    transition: var(--medTransition);
+    transition: var(--fastTransition);
 }
 
 .svgProvinceArea {
     fill: var(--defaultProvinceColour);
-    transition: var(--medTransition);
+    transition: var(--fastTransition);
 }
 
 #ontario .svgProvinceArea {
@@ -281,7 +282,7 @@ Graph Selects
 
 .selectedProvince .svgProvinceOutline {
     stroke-width: 8;
-    stroke: var(--primary);
+    stroke: var(--provinceHighlight);
     transition: var(--medTransition);
 }
 
