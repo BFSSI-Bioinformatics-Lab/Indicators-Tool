@@ -5,7 +5,10 @@ import { DictTools, Translation } from "./tools.js";
 export class Model {
     constructor() {
         this.pageName = Pages.Home;
-        this.groupedData;
+    
+        this.groupedData = {};
+        this.filteredData = {};
+
         this.plotSelections = {};
         this.plotInputs = {};
         this.plotData;
@@ -79,16 +82,23 @@ export class Model {
         }
     }
 
-    // updatePlotData(): Updates the internal data for the plots
-    updatePlotData() {
-        this.plotData = this.groupedData;
-        
+    // getFilteredData(): Retrives the data filtered based on the filter options the user selected
+    getFilteredData() {
+        let result = this.groupedData;
+
         for (let i = 0; i < PlotFilterOrder.length; ++i) {
             const currentOpt = PlotFilterOrder[i];
             const currentInput = this.plotInputs[currentOpt];
-            this.plotData = this.plotData[currentInput];
+            result = result[currentInput];
         }
 
+        return result;
+    }
+
+    // updatePlotData(): Updates the internal data for the plots
+    updatePlotData() {
+        this.filteredData = this.getFilteredData();
+        this.plotData = this.filteredData;
         const graphTypes = Translation.translate("GraphTypes", {returnObjects: true});
 
         if (graphTypes[this.plotInputs[PlotFilterOpts.GraphType]] == GraphTypes.Map) {

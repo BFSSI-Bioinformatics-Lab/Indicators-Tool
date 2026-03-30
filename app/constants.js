@@ -18,7 +18,9 @@ export const DataCols = {
     Population: "Population",
     GraphType: "Graph type",
     SubGroup: "Subgroup",
-    Estimate: "Estimate"
+    Estimate: "Estimate",
+    WhatIsMeasured: "What is measured?",
+    WhyItMatters: "Why does it matter?"
 }
 
 // Different filter options for the plots
@@ -183,7 +185,12 @@ const LangEN = {
             tooltip: [
                 "Estimate: {{ estimate }}"
             ]
-        }
+        },
+
+        WhatIsMeasuredHeading: "What is measured",
+        WhyItMattersHeading: "Why does it matter",
+        TableHeading: "Data summary table",
+        NotesHeading: "Notes, sources and additional information"
     }
 }
 
@@ -246,7 +253,12 @@ const LangFR = {
             tooltip: [
                 `${REMPLACER_MOI_AVEC_ARGUMENTS}: {{ estimate }}`
             ]
-        }
+        },
+
+        WhatIsMeasuredHeading: REMPLACER_MOI,
+        WhyItMattersHeading: REMPLACER_MOI,
+        TableHeading: REMPLACER_MOI,
+        NotesHeading: REMPLACER_MOI
     }
 }
 

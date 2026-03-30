@@ -12,7 +12,7 @@
 
 
 import { Translation } from './tools.js';
-import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFilterOrderInds, GraphSelectImages, GraphTypes } from './constants.js';
+import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFilterOrderInds, GraphSelectImages, GraphTypes, DataCols } from './constants.js';
 import { Model } from './backend.js';
 import { MapGraph } from './graphs/mapGraph.js';
 import { EmptyGraph } from './graphs/emptyGraph.js';
@@ -170,6 +170,28 @@ class App {
         graph.update();
     }
 
+    updateGraphDescription() {
+        const whatIsMeausredContainer = d3.select("#whatIsMeausuredContainer");
+        const whyItMattersContainer = d3.select("#whyMattersContainer");
+
+        
+        if (this.model.filteredData.length == 0) {
+            whatIsMeausredContainer.select("p").text("");
+            whyItMattersContainer.select("p").text("");
+
+            whatIsMeausredContainer.classed("d-none", true);
+            whyItMattersContainer.classed("d-none", true);
+            return;
+        }
+
+        whatIsMeausredContainer.classed("d-none", false);
+        whyItMattersContainer.classed("d-none", false);
+
+        const firstRow = this.model.filteredData[0];
+        whatIsMeausredContainer.select("p").text(firstRow[DataCols.WhatIsMeasured]);
+        whyItMattersContainer.select("p").text(firstRow[DataCols.WhyItMatters]);
+    }
+
     updateGraphSelect(graphSelectContainer, selections, input, title) {
         const graphSelector = graphSelectContainer.select(".graph-selects-container");
         const self = this;
@@ -200,6 +222,7 @@ class App {
 
                     self.model.updatePlotFilterOpt(PlotFilterOpts.GraphType, selectedGraphData.text);
                     self.updateGraph(selectedGraphData.type);
+                    self.updateGraphDescription();
                 });
 
             currentGraphSelect.append("span")
@@ -250,6 +273,19 @@ class App {
 
     setupPlotPage() {
         d3.select("#aboutPlotText").html(Translation.translate("AboutPlot"));
+
+        const whatIsMeausredContainer = d3.select("#whatIsMeausuredContainer").classed("d-none", true);
+        const whyItMattersContainer = d3.select("#whyMattersContainer").classed("d-none", true);
+
+        whatIsMeausredContainer.select("label").text(Translation.translate("WhatIsMeasuredHeading"));
+        whyItMattersContainer.select("label").text(Translation.translate("WhyItMattersHeading"));
+
+        const tableAccordion = d3.select("#tableAccordion");
+        const notesAccordion = d3.select("#notesAccordion");
+
+        tableAccordion.select("summary").text(Translation.translate("TableHeading"));
+        notesAccordion.select("summary").text(Translation.translate("NotesHeading"));
+
         const plotFilterTitles = Translation.translate("PlotFilterTitles", {returnObjects: true});
 
         this.updateFilterFuncs = {
