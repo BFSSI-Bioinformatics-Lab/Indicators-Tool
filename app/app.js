@@ -159,13 +159,13 @@ class App {
         }
 
         this.graphs[selectedGraphType] = result;
-        return result
+        return result;
     }
 
     // updateGraph(selectedGraphType): Update the graph
     updateGraph(selectedGraphType) {
         let graph = this.graphs[selectedGraphType];
-        if (graph == undefined) {
+        if (graph === undefined) {
             graph = this.setupGraph(selectedGraphType);
         }
 
@@ -239,7 +239,12 @@ class App {
 
         const graphSelectLabel = graphSelectContainer.select("label");
         graphSelectLabel.text(title);
-        this.updateGraph(input);
+
+        const graphType = graphTypes[input];
+        if (graphType === undefined) return;
+
+        this.updateGraph(graphType);
+        self.updateGraphDescription();
     }
 
     updatePlotFilterOpt(selector, filterOpt) {
@@ -270,7 +275,6 @@ class App {
     updatePlotGraphSelect(filterOpt, graphSelectContainer, plotFilterTitles) {
         const selections = this.model.plotSelections[filterOpt];
         const input = this.model.plotInputs[filterOpt];
-
         this.updateGraphSelect(graphSelectContainer, selections, input, plotFilterTitles[filterOpt]);
     }
 
