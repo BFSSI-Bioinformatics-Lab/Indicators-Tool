@@ -221,90 +221,18 @@ export class MapGraph extends BaseGraph {
             estimate: data.data[DataCols.Estimate]
         });
         
-        // ------- draw the tooltip ------------
-
-        // attributes for the tool tip
-        const toolTip = {};
-        let toolTipWidth = Dims.MapGraph.TooltipMinWidth;
-        let toolTipHeight = Dims.MapGraph.TooltipHeight;
-        const textGroupPosX = Dims.MapGraph.TooltipHighlightWidth + Dims.MapGraph.TooltipPaddingHor +  Dims.MapGraph.TooltipTextPaddingHor;
-        let currentTextGroupPosY = Dims.MapGraph.TooltipPaddingVert + Dims.MapGraph.TooltipTextPaddingVert;
-
-        const toolTipHighlightXPos = Dims.MapGraph.TooltipPaddingHor + Dims.MapGraph.TooltipHighlightWidth / 2;
-
-        // draw the container for the tooltip
-        toolTip.group = this.tooltipGroup.append("g")
-            .attr("opacity", hide ? 0 : 1)
-            .on("touchstart", (event, data) => {
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                event.preventDefault();
-
-                if (this.shownTooltip === undefined) return;
-
-                let currentOpacity = this.shownTooltip.group.attr("opacity");
-                let newOpacity = Math.abs(currentOpacity - 1);
-                this.shownTooltip.group
-                    .attr("opacity", newOpacity)
-                    .style("pointer-events", newOpacity ? "auto": "none");
-
-                if (newOpacity == 0) {
-                    this.shownTooltip = undefined;
-                }
-            });
-
-        // draw the background for the tooltip
-        toolTip.background = toolTip.group.append("rect")
-            .attr("height", toolTipHeight)
-            .attr("width", toolTipWidth)
-            .attr("fill", "var(--surface)")
-            .attr("stroke", colour)
-            .attr("stroke-width", Dims.MapGraph.TooltipBorderWidth)
-            .attr("rx", 5);
-
-        // draw the highlight
-        toolTip.highlight = toolTip.group.append("line")
-            .attr("x1", toolTipHighlightXPos)
-            .attr("x2", toolTipHighlightXPos)
-            .attr("y1", Dims.MapGraph.TooltipPaddingVert)
-            .attr("y2", toolTipHeight - Dims.MapGraph.TooltipPaddingVert)
-            .attr("stroke", colour) 
-            .attr("stroke-width", Dims.MapGraph.TooltipHighlightWidth)
-            .attr("stroke-linecap", "round");
-
-        // draw the title
-        toolTip.titleGroup = toolTip.group.append("text")
-            .attr("font-size", Dims.MapGraph.TooltipFontSize)
-            .attr("font-weight", "bold")
-            .attr("fill", "var(--fontColour)")
-            .attr("transform", `translate(${textGroupPosX}, ${currentTextGroupPosY})`);
-
-        const titleDims = Visuals.drawText({textGroup: toolTip.titleGroup, text: provinceName, fontSize: Dims.MapGraph.TooltipFontSize, 
-                                            textWrap: TextWrap.NoWrap, padding: Dims.MapGraph.TooltipPaddingVert});
-
-        currentTextGroupPosY += titleDims.textBottomYPos + Dims.MapGraph.TooltipTitleMarginBtm;
-
-        // draw the text
-        toolTip.textGroup = toolTip.group.append("text")
-            .attr("font-size", Dims.MapGraph.TooltipFontSize)
-            .attr("fill", "var(--fontColour)")
-            .attr("transform", `translate(${textGroupPosX}, ${currentTextGroupPosY})`);
-
-        const textDims = Visuals.drawText({textGroup: toolTip.textGroup, text: lines, fontSize: Dims.MapGraph.TooltipFontSize, 
-                                           textWrap: TextWrap.NoWrap, padding: Dims.MapGraph.TooltipPaddingVert});
-
-        currentTextGroupPosY += textDims.textBottomYPos;
-
-        // update the height of the tooltip to be larger than the height of all the text
-        toolTipHeight = Math.max(toolTipHeight, currentTextGroupPosY + Dims.MapGraph.TooltipPaddingVert + Dims.MapGraph.TooltipTextPaddingVert);
-        toolTip.background.attr("height", toolTipHeight);
-        toolTip.highlight.attr("y2", toolTipHeight - Dims.MapGraph.TooltipPaddingVert);
-
-        // update the width of the tooltip to be larger than the width of all the text
-        toolTipWidth = Math.max(toolTipWidth, 2 * Dims.MapGraph.TooltipPaddingHor + Dims.MapGraph.TooltipHighlightWidth + 2 * Dims.MapGraph.TooltipTextPaddingHor + Math.max(titleDims.width, textDims.width));
-        toolTip.background.attr("width", toolTipWidth);
-
-        // -------------------------------------
+        const toolTip = Visuals.createTooltip({tooltipGroup: this.tooltipGroup, title: provinceName, lines, colour, hide, 
+            tooltipMinWidth: Dims.MapGraph.TooltipMinWidth,
+            toolTipHeight: Dims.MapGraph.TooltipHeight,
+            tooltipPaddingVert: Dims.MapGraph.TooltipPaddingVert,
+            tooltipPaddingHor: Dims.MapGraph.TooltipTextPaddingHor,
+            tooltipTextPaddingVert: Dims.MapGraph.TooltipTextPaddingVert,
+            tooltipTextPaddingHor: Dims.MapGraph.TooltipTextPaddingHor,
+            tooltipHighlightWidth: Dims.MapGraph.TooltipHighlightWidth,
+            tooltipBorderWidth: Dims.MapGraph.TooltipBorderWidth,
+            tooltipFontSize: Dims.MapGraph.TooltipFontSize,
+            tooltipTitleMarginBtm: Dims.MapGraph.TooltipTitleMarginBtm,
+        });
 
         this.tooltips[provinceKey] = toolTip;
         return toolTip;

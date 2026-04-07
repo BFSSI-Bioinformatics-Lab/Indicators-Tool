@@ -16,6 +16,7 @@ import { TranslationObj, PageSrc, Pages, PlotFilterOpts, PlotFilterOrder, PlotFi
 import { Model } from './backend.js';
 import { MapGraph } from './graphs/mapGraph.js';
 import { EmptyGraph } from './graphs/emptyGraph.js';
+import { SexBarGraph } from './graphs/sexBarGraph.js';
 
 
 class App {
@@ -151,6 +152,8 @@ class App {
         let result;
         if (selectedGraphType == GraphTypes.Map) {
             result = new MapGraph(this.model);
+        } else if (selectedGraphType == GraphTypes.Sex) {
+            result = new SexBarGraph(this.model);
         } else {
             result = new EmptyGraph(this.model);
         }

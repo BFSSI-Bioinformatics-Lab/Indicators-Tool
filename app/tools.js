@@ -202,4 +202,97 @@ export class Visuals {
 
         return {width, textBottomYPos: textY - lineSpacing - fontSize, numLines};
     }
+
+    /* Creates tooltip for hovering over bars */
+    static createTooltip({tooltipGroup, title, lines, hide = false, colour =  "black", tooltipMinWidth = 200, toolTipHeight = 100,
+                   tooltipPaddingVert = 8, tooltipPaddingHor = 8, tooltipTextPaddingVert = 4,
+                   tooltipTextPaddingHor = 8, tooltipHighlightWidth = 4, tooltipBorderWidth = 2,
+                   tooltipFontSize = 12, tooltipTitleMarginBtm = 4} = {}){
+
+        // ------- draw the tooltip ------------
+
+        // attributes for the tool tip
+        const toolTip = {};
+        let toolTipWidth = tooltipMinWidth;
+        const textGroupPosX = tooltipHighlightWidth + tooltipPaddingHor +  tooltipTextPaddingHor;
+        let currentTextGroupPosY = tooltipPaddingVert + tooltipTextPaddingVert;
+
+        const toolTipHighlightXPos = tooltipPaddingHor + tooltipHighlightWidth / 2;
+
+        // draw the container for the tooltip
+        toolTip.group = tooltipGroup.append("g")
+            .attr("opacity", hide ? 0 : 1)
+            .on("touchstart", (event, data) => {
+                event.stopImmediatePropagation();
+                event.stopPropagation();
+                event.preventDefault();
+
+                if (this.shownTooltip === undefined) return;
+
+                let currentOpacity = this.shownTooltip.group.attr("opacity");
+                let newOpacity = Math.abs(currentOpacity - 1);
+                this.shownTooltip.group
+                    .attr("opacity", newOpacity)
+                    .style("pointer-events", newOpacity ? "auto": "none");
+
+                if (newOpacity == 0) {
+                    this.shownTooltip = undefined;
+                }
+            });
+
+        // draw the background for the tooltip
+        toolTip.background = toolTip.group.append("rect")
+            .attr("height", toolTipHeight)
+            .attr("width", toolTipWidth)
+            .attr("fill", "var(--surface)")
+            .attr("stroke", colour)
+            .attr("stroke-width", tooltipBorderWidth)
+            .attr("rx", 5);
+
+        // draw the highlight
+        toolTip.highlight = toolTip.group.append("line")
+            .attr("x1", toolTipHighlightXPos)
+            .attr("x2", toolTipHighlightXPos)
+            .attr("y1", tooltipPaddingVert)
+            .attr("y2", toolTipHeight - tooltipPaddingVert)
+            .attr("stroke", colour) 
+            .attr("stroke-width", tooltipHighlightWidth)
+            .attr("stroke-linecap", "round");
+
+        // draw the title
+        toolTip.titleGroup = toolTip.group.append("text")
+            .attr("font-size", tooltipFontSize)
+            .attr("font-weight", "bold")
+            .attr("fill", "var(--fontColour)")
+            .attr("transform", `translate(${textGroupPosX}, ${currentTextGroupPosY})`);
+
+        const titleDims = Visuals.drawText({textGroup: toolTip.titleGroup, text: title, fontSize: tooltipFontSize, 
+                                            textWrap: TextWrap.NoWrap, padding: tooltipPaddingVert});
+
+        currentTextGroupPosY += titleDims.textBottomYPos + tooltipTitleMarginBtm;
+
+        // draw the text
+        toolTip.textGroup = toolTip.group.append("text")
+            .attr("font-size", tooltipFontSize)
+            .attr("fill", "var(--fontColour)")
+            .attr("transform", `translate(${textGroupPosX}, ${currentTextGroupPosY})`);
+
+        const textDims = Visuals.drawText({textGroup: toolTip.textGroup, text: lines, fontSize: tooltipFontSize, 
+                                           textWrap: TextWrap.NoWrap, padding: tooltipPaddingVert});
+
+        currentTextGroupPosY += textDims.textBottomYPos;
+
+        // update the height of the tooltip to be larger than the height of all the text
+        toolTipHeight = Math.max(toolTipHeight, currentTextGroupPosY + tooltipPaddingVert + tooltipTextPaddingVert);
+        toolTip.background.attr("height", toolTipHeight);
+        toolTip.highlight.attr("y2", toolTipHeight - tooltipPaddingVert);
+
+        // update the width of the tooltip to be larger than the width of all the text
+        toolTipWidth = Math.max(toolTipWidth, 2 * tooltipPaddingHor + tooltipHighlightWidth + 2 * tooltipTextPaddingHor + Math.max(titleDims.width, textDims.width));
+        toolTip.background.attr("width", toolTipWidth);
+
+        // -------------------------------------
+
+        return toolTip;
+    }
 }
