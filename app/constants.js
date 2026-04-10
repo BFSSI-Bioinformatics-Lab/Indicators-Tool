@@ -155,7 +155,35 @@ export const Dims = {
         TooltipFontSize: 20,
         TooltipTitleMarginBtm: 4,
         TooltipMouseXOffset: 2,
-        TooltipMouseYOffset: 2
+        TooltipMouseYOffset: 2,
+        BarPadding: 0.08
+    },
+
+    AgeGraph: {
+        GraphWidth: 800,
+        GraphHeight: 800,
+        GraphTop: 200,
+        GraphBottom: 200,
+        GraphLeft: 200,
+        GraphRight: 200,
+        HeadingFontSize: 38,
+        AxesFontSize: 30,
+        TickFontSize: 22,
+        WhiskerWidth: 80,
+        WhiskerStrokeWidth: 5,
+        TooltipMinWidth: 180,
+        TooltipHeight: 50,
+        TooltipPaddingVert: 16,
+        TooltipPaddingHor: 8,
+        TooltipTextPaddingVert: 4,
+        TooltipTextPaddingHor: 24,
+        TooltipHighlightWidth: 5,
+        TooltipBorderWidth: 5,
+        TooltipFontSize: 20,
+        TooltipTitleMarginBtm: 4,
+        TooltipMouseXOffset: 2,
+        TooltipMouseYOffset: 2,
+        BarPadding: 0.08
     }
 }
 
@@ -226,6 +254,17 @@ const LangEN = {
         },
 
         SexGraph: {
+            graphTitle: "Indicator Estimate By Sex",
+            xAxisTitle: "Sex",
+            yAxisTitle: "Estimate",
+            tooltip: [
+                "Estimate: {{ estimate }}",
+                "U95%CI: {{ u95ci }}",
+                "L95%CI: {{ l95ci }}"
+            ]
+        },
+
+        AgeGraph: {
             graphTitle: "Indicator Estimate By Sex",
             xAxisTitle: "Sex",
             yAxisTitle: "Estimate",
@@ -317,6 +356,17 @@ const LangFR = {
                 `${REMPLACER_MOI_AVEC_ARGUMENTS}: {{ estimate }}`,
                 `${REMPLACER_MOI_AVEC_ARGUMENTS}: {{ u95ci }}`,
                 `${REMPLACER_MOI_AVEC_ARGUMENTS}: {{ l95ci }}`
+            ]
+        },
+
+        AgeGraph: {
+            graphTitle: REMPLACER_MOI,
+            xAxisTitle: "Âge",
+            yAxisTitle: REMPLACER_MOI,
+            tooltip: [
+                "Estimate: {{ estimate }}",
+                "U95%CI: {{ u95ci }}",
+                "L95%CI: {{ l95ci }}"
             ]
         },
 

@@ -17,6 +17,7 @@ import { Model } from './backend.js';
 import { MapGraph } from './graphs/mapGraph.js';
 import { EmptyGraph } from './graphs/emptyGraph.js';
 import { SexBarGraph } from './graphs/sexBarGraph.js';
+import { AgeBarGraph } from './graphs/ageBarGraph.js';
 
 
 class App {
@@ -154,6 +155,8 @@ class App {
             result = new MapGraph(this.model);
         } else if (selectedGraphType == GraphTypes.Sex) {
             result = new SexBarGraph(this.model);
+        } else if (selectedGraphType == GraphTypes.Age) {
+            result = new AgeBarGraph(this.model);
         } else {
             result = new EmptyGraph(this.model);
         }

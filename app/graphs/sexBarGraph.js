@@ -9,10 +9,8 @@ export class SexBarGraph extends BaseGraph {
         this.width = Dims.SexGraph.GraphLeft + Dims.SexGraph.GraphWidth + Dims.SexGraph.GraphRight;
         this.height = Dims.SexGraph.GraphTop + Dims.SexGraph.GraphHeight + Dims.SexGraph.GraphBottom;
 
-        this.provinces = {};
         this.tooltips = {};
         this.shownTooltip;
-        this.shownProvince;
     }
 
     setup() {
@@ -42,7 +40,7 @@ export class SexBarGraph extends BaseGraph {
         this.xAxisScale =  d3.scaleBand()
             .domain(data.map((d) => d[DataCols.SubGroup]))
             .range([Dims.SexGraph.GraphLeft, Dims.SexGraph.GraphLeft + Dims.SexGraph.GraphWidth])
-            .padding(0.08);
+            .padding(Dims.SexGraph.BarPadding);
 
         this.xAxisLine = this.xAxis.append("g")
             .attr("transform", `translate(0, ${Dims.SexGraph.GraphTop + Dims.SexGraph.GraphHeight})`)
@@ -136,7 +134,7 @@ export class SexBarGraph extends BaseGraph {
             .on("mouseover", function(d) {self.onBarHover(d3.select(this), d);})
             .on("mousemove", function(d) {self.onBarHover(d3.select(this), d);})
             .on("mouseenter", function(d) {self.onBarHover(d3.select(this), d);})
-            .on("mouseleave", function(d) {self.onBarUnHover(d3.select(this), d);});;
+            .on("mouseleave", function(d) {self.onBarUnHover(d3.select(this), d);});
         
         // draw the whiskers
         this.bars.append("line")
