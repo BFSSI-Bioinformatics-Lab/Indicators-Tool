@@ -265,9 +265,9 @@ const LangEN = {
         },
 
         AgeGraph: {
-            graphTitle: "Indicator Estimate By Sex",
-            xAxisTitle: "Sex",
-            yAxisTitle: "Estimate",
+            graphTitle: "Indicator Estimate By Age",
+            xAxisTitle: "Estimate",
+            yAxisTitle: "Age Group",
             tooltip: [
                 "Estimate: {{ estimate }}",
                 "U95%CI: {{ u95ci }}",
@@ -361,7 +361,7 @@ const LangFR = {
 
         AgeGraph: {
             graphTitle: REMPLACER_MOI,
-            xAxisTitle: "Âge",
+            xAxisTitle: REMPLACER_MOI,
             yAxisTitle: REMPLACER_MOI,
             tooltip: [
                 "Estimate: {{ estimate }}",
